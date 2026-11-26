@@ -1,6 +1,7 @@
 import urllib.request
 import json
 import datetime
+import os
 
 url = "https://wtxmd52.tele68.com/v1/txmd5/sessions"
 req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -11,8 +12,9 @@ data = json_data.get('list', [])
 if data:
     now = datetime.datetime.now()
     time_now = now.strftime("%Y-%m-%d %H:%M:%S")
-    # Tạo tên file tự động theo ngày giờ: baocao_YYYYMMDD_HHMMSS.txt
-    filename = now.strftime("baocao_%Y%m%d_%H%M%S.txt")
+    
+    # Tạo tên file tự động: data_ngay_thang_nam_gio_phut.txt
+    filename = now.strftime("data_%Y%m%d_%H%M.txt")
     
     total = len(data)
     line = "=" * 50
@@ -57,7 +59,7 @@ if data:
     
     report = "\n".join(p1) + "\n" + "\n".join(p2)
     
-    # Lưu vào file có tên là ngày giờ hiện tại
+    # Ghi ra file mới có tên là ngày giờ
     with open(filename, "w", encoding="utf-8") as f:
         f.write(report)
     print(f"=> Thanh cong! Da tao file: {filename}")
